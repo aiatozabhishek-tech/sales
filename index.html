@@ -75,7 +75,7 @@ footer{background:#11142f;color:#fff;padding:28px max(5vw,22px);display:flex;jus
 <footer><div><div class="brand"><div class="logo">AI</div><div>AI AtoZ<small>SALES PITCH GENERATOR</small></div></div><div class="muted">Turn every lead into a meaningful conversation.</div></div><div><b>B. Abhishek</b><div class="muted">Senior Sales Executive · <a href="tel:9652209994">9652209994</a></div></div><div class="muted">© <span id="year"></span> AI AtoZ</div></footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-const COURSE_URL = "https://learn.aiatoz.org/learn/fast-checkout/282596?priceId=320982";
+const COURSE_URL = "https://learn.aiatoz.org/learn";
 const $ = id => document.getElementById(id);
 let pitches = {call:"", email:"", whatsapp:""};
 let toastTimer;
@@ -92,6 +92,16 @@ const courseInfo = {
  "All Courses / Complete AI Learning Program":"explore a broader learning journey across AI concepts, prompt engineering, AI-assisted coding, and creative AI applications"
 };
 function escapeName(s){return s.trim().replace(/\s+/g," ")}
+// Always use India Standard Time (Asia/Kolkata), regardless of the device timezone.
+function getIndianTimeGreeting(){
+ const hourText = new Intl.DateTimeFormat("en-IN", {
+   timeZone: "Asia/Kolkata", hour: "2-digit", hourCycle: "h23"
+ }).format(new Date());
+ const hour = Number(hourText);
+ if (hour >= 5 && hour < 12) return "Good Morning";
+ if (hour >= 12 && hour < 17) return "Good Afternoon";
+ return "Good Evening";
+}
 function interestLine(interest){
  const map={
  "Beginner in AI":"If you're just getting started, this can be an opportunity to build your understanding step by step",
@@ -118,9 +128,10 @@ function buildPitches(){
  const overview=courseInfo[course] || "explore AI concepts and their practical applications";
  const relevant=interestLine(interest);
  const intro=toneIntro(tone);
- pitches.call=`Hello ${name}, good morning!\n\nMy name is Abhishek, and I am a Senior Sales Executive at AI AtoZ. Is this a good time for a quick conversation?\n\n${intro}\n\nI’d like to introduce our ${course} program. It is intended to help learners ${overview}.\n\n${relevant}. I’d be happy to understand what you want to achieve and explain the program details so you can decide whether it fits your needs.\n\nMay I know what your main goal is for learning about AI—career development, your studies, business, or personal projects?\n\nYou can also review the program and enrollment details here: ${COURSE_URL}\n\nWould you be available for a brief discussion? Thank you for your time, ${name}. Have a great day!\n\nB. Abhishek\nSenior Sales Executive | AI AtoZ\n9652209994`;
- pitches.email=`Subject: ${name}, Explore ${course} with AI AtoZ\n\nDear ${name},\n\nGreetings from AI AtoZ!\n\nI am B. Abhishek, a Senior Sales Executive at AI AtoZ. ${intro}\n\nOur ${course} program is designed to help learners ${overview}. ${relevant}. Depending on your goals, it may be a useful opportunity to explore AI concepts and how they can be applied.\n\nI would be happy to understand your learning objectives and guide you through the available program details. You can review the course and enrollment information using the link below:\n\n${COURSE_URL}\n\nPlease feel free to reply to this email or contact me at 9652209994 if you have any questions.\n\nThanks and regards,\nB. Abhishek\nSenior Sales Executive | AI AtoZ\nPhone: 9652209994`;
- pitches.whatsapp=`Hi ${name}! 👋\n\nI’m Abhishek, Senior Sales Executive at AI AtoZ.\n\n${intro}\n\nOur *${course}* program can help you ${overview}. ${relevant}.\n\n🔗 Explore the program and enrollment details:\n${COURSE_URL}\n\nWould you like me to help you understand the program and see whether it matches your goals?\n\nThanks and regards,\n*B. Abhishek*\nSenior Sales Executive | AI AtoZ\n📞 9652209994`;
+ const greeting=getIndianTimeGreeting();
+ pitches.call=`Hello ${name}, ${greeting}!\n\nMy name is Abhishek, and I am a Senior Sales Executive at AI AtoZ. Is this a good time for a quick conversation?\n\n${intro}\n\nI’d like to introduce our ${course} program. It is intended to help learners ${overview}.\n\n${relevant}. I’d be happy to understand what you want to achieve and explain the program details so you can decide whether it fits your needs.\n\nMay I know what your main goal is for learning about AI—career development, your studies, business, or personal projects?\n\nYou can also review the program and enrollment details here: ${COURSE_URL}\n\nWould you be available for a brief discussion? Thank you for your time, ${name}. Have a great day!\n\nB. Abhishek\nSenior Sales Executive | AI AtoZ\n9652209994`;
+ pitches.email=`Subject: ${name}, Explore ${course} with AI AtoZ\n\nDear ${name},\n\n${greeting} from AI AtoZ!\n\nI am B. Abhishek, a Senior Sales Executive at AI AtoZ. ${intro}\n\nOur ${course} program is designed to help learners ${overview}. ${relevant}. Depending on your goals, it may be a useful opportunity to explore AI concepts and how they can be applied.\n\nI would be happy to understand your learning objectives and guide you through the available program details. You can review the course and enrollment information using the link below:\n\n${COURSE_URL}\n\nPlease feel free to reply to this email or contact me at 9652209994 if you have any questions.\n\nThanks and regards,\nB. Abhishek\nSenior Sales Executive | AI AtoZ\nPhone: 9652209994`;
+ pitches.whatsapp=`${greeting}, ${name}! 👋\n\nI’m Abhishek, Senior Sales Executive at AI AtoZ.\n\n${intro}\n\nOur *${course}* program can help you ${overview}. ${relevant}.\n\n🔗 Explore the program and enrollment details:\n${COURSE_URL}\n\nWould you like me to help you understand the program and see whether it matches your goals?\n\nThanks and regards,\n*B. Abhishek*\nSenior Sales Executive | AI AtoZ\n📞 9652209994`;
  renderPitches();
 }
 const cardMeta=[
